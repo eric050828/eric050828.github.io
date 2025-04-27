@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>履歷表 - 李丞穎</title>
+    <style>
+        /* 基本重置與字體設定 */
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', '蘋方-繁', 'PingFang TC', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+            line-height: 1.6;
+            color: #444;
+            /* 深灰色文字，更柔和 */
+            background-color: #f4f4f4;
+            /* 淺灰色背景 */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* A4 頁面模擬 */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 0;
+            /* 由內部容器控制 padding */
+            margin: 15mm auto;
+            background: #fff;
+            /* 白色背景 */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            /* 使用 Flexbox 實現兩欄佈局 */
+            box-sizing: border-box;
+            overflow: hidden;
+            /* 防止子元素溢出 */
+        }
+
+        /* 左側欄 (深色背景) */
+        .sidebar {
+            width: 70mm;
+            /* 左欄寬度 */
+            background-color: #2c3e50;
+            /* 深藍灰色 */
+            color: #ecf0f1;
+            /* 淺灰色文字 */
+            padding: 20mm 10mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            word-wrap: break-word;
+            /* 避免長連結溢出 */
+        }
+
+        .sidebar a {
+            color: #9ec5fe;
+            /* 淡藍色連結 */
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        .sidebar h2 {
+            color: #1abc9c;
+            /* 綠松石色標題 */
+            font-size: 1.3em;
+            margin-top: 15mm;
+            /* 與上一個區塊的間隔 */
+            margin-bottom: 8mm;
+            border-bottom: 1px solid #34495e;
+            /* 深一點的邊框 */
+            padding-bottom: 5px;
+        }
+
+        .sidebar h2:first-of-type {
+            margin-top: 0;
+            /* 第一個標題無上邊距 */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .sidebar .contact-info li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .contact-info i {
+            margin-right: 8px;
+            width: 16px;
+            /* 圖標寬度 */
+            text-align: center;
+            color: #1abc9c;
+            /* 圖標顏色 */
+        }
+
+        /* 主內容區 (淺色背景) */
+        .main-content {
+            width: 140mm;
+            /* 右欄寬度 = 210mm - 70mm */
+            padding: 20mm 15mm;
+            box-sizing: border-box;
+            background-color: #fff;
+            /* 白色背景 */
+            /* 新增：細微的背景圖案 */
+            background-image: repeating-linear-gradient(45deg,
+                    rgba(44, 62, 80, 0.03),
+                    rgba(44, 62, 80, 0.03) 1px,
+                    transparent 1px,
+                    transparent 10px);
+            /* --- */
+            overflow-y: auto;
+            /* 如果內容過多，允許滾動 */
+        }
+
+        .main-content h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .main-content .job-title {
+            font-size: 1.4em;
+            color: #1abc9c;
+            /* 綠松石色 */
+            margin-bottom: 15mm;
+            font-weight: normal;
+        }
+
+        .main-content h2 {
+            font-size: 1.6em;
+            color: #2c3e50;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 6px;
+            margin-bottom: 10mm;
+            margin-top: 15mm;
+        }
+
+        .main-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .main-content p {
+            margin-bottom: 1em;
+            color: #555;
+            /* 比基礎文字稍淺 */
+        }
+
+        .experience-item,
+        .project-item,
+        .education-item {
+            margin-bottom: 15mm;
+        }
+
+        .experience-item:last-child,
+        .project-item:last-child,
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .experience-item h3,
+        .project-item h3,
+        .education-item h3 {
+            font-size: 1.2em;
+            color: #34495e;
+            /* 較深的藍灰色 */
+            margin-bottom: 2px;
+        }
+
+        .item-meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            /* 灰色 */
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .main-content ul {
+            list-style: none;
+            /* 使用自定義符號 */
+            padding-left: 5mm;
+            margin-top: 5px;
+        }
+
+        .main-content li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 15px;
+            /* 為自定義符號留出空間 */
+            font-size: 0.95em;
+        }
+
+        .main-content li::before {
+            content: '•';
+            /* 項目符號 */
+            color: #1abc9c;
+            /* 符號顏色 */
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.3em;
+            position: absolute;
+            left: 10px;
+            top: 1px;
+        }
+
+        .project-item .project-link {
+            font-size: 0.9em;
+            margin-left: 5px;
+            color: #007bff;
+        }
+
+        .project-item .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 技能 */
+        .skills-list {
+            columns: 1;
+            /* 側邊欄較窄，單欄即可 */
+            font-size: 0.9em;
+        }
+
+        .skills-list strong {
+            /* Skill category */
+            display: block;
+            margin-bottom: 5px;
+            color: #ecf0f1;
+            /* 淺灰色 */
+            font-weight: bold;
+            margin-top: 10px;
+            /* Add space above category */
+        }
+
+        .skills-list li {
+            background-color: #34495e;
+            /* 深一點的背景 */
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            display: inline-block;
+            /* 讓技能標籤並排顯示 */
+            margin-right: 5px;
+            font-size: 0.9em;
+        }
+
+        /* 個人特質 */
+        .traits-list {
+            font-size: 0.9em;
+            padding-left: 0;
+            /* 覆蓋默認的 ul padding */
+        }
+
+        .traits-list li {
+            background-color: #34495e;
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* 列印樣式 */
+        @media print {
+            body {
+                background-color: #fff;
+                font-size: 10pt;
+                /* 調整列印字體大小 */
+            }
+
+            .page {
+                width: 100%;
+                min-height: auto;
+                margin: 0;
+                box-shadow: none;
+                display: block;
+                /* 取消 Flexbox */
+                padding: 10mm;
+                /* 增加列印邊距 */
+            }
+
+            .sidebar {
+                width: 65mm;
+                /* 調整列印時的側邊欄寬度 */
+                padding: 10mm 8mm;
+                float: left;
+                /* 使用浮動實現列印時的佈局 */
+                background-color: #f0f0f0;
+                /* 列印時側邊欄用淺灰 */
+                color: #333;
+            }
+
+            .sidebar h2 {
+                color: #333;
+                /* 列印標題顏色 */
+                border-bottom: 1px solid #ccc;
+            }
+
+            .sidebar a {
+                color: #007bff;
+            }
+
+            .sidebar .contact-info i {
+                color: #333;
+            }
+
+            .skills-list strong {
+                color: #333;
+            }
+
+            .skills-list li {
+                background-color: #e0e0e0;
+                color: #333;
+            }
+
+            .traits-list li {
+                background-color: #e0e0e0;
+                color: #333;
+            }
+
+            .main-content {
+                width: calc(100% - 70mm);
+                /* 調整列印時的主內容寬度 */
+                padding: 10mm;
+                float: right;
+                overflow: visible;
+            }
+
+            .main-content h1,
+            .main-content .job-title,
+            .main-content h2,
+            .main-content h3 {
+                color: #333;
+                /* 統一列印顏色 */
+            }
+
+            .main-content h2 {
+                border-bottom: 1px solid #ccc;
+            }
+
+            .main-content li::before {
+                color: #555;
+            }
+
+            /* 防止元素跨頁斷裂 (盡力而為) */
+            section,
+            .experience-item,
+            .project-item,
+            .education-item {
+                page-break-inside: avoid;
+            }
+
+            h1,
+            h2,
+            h3 {
+                page-break-after: avoid;
+            }
+
+            ul {
+                page-break-before: auto;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 10mm;
+            /* 瀏覽器的打印邊距 */
+        }
+
+        /* 專案分組樣式 */
+        .project-item-group {
+            margin-bottom: 15mm;
+            /* 與下方區塊的間距 */
+            border-left: 3px solid #1abc9c;
+            /* 左側加一個裝飾線 */
+            padding-left: 10mm;
+            /* 左側內縮 */
+            margin-left: -10mm;
+            /* 抵銷部分內縮，讓標題對齊 */
+        }
+
+        .project-item-group h4 {
+            font-size: 1.3em;
+            /* 子分類標題大小 */
+            color: #34495e;
+            /* 子分類標題顏色 */
+            margin-bottom: 8mm;
+            margin-left: 10mm;
+            /* 讓標題與內容對齊 */
+            position: relative;
+        }
+
+        .project-item-group h4::before {
+            content: '';
+            /* 可選：在標題前加裝飾 */
+            /* position: absolute; */
+            /* left: -15px; */
+            /* top: 50%; */
+            /* transform: translateY(-50%); */
+            /* width: 8px; */
+            /* height: 8px; */
+            /* background-color: #1abc9c; */
+            /* border-radius: 50%; */
+        }
+
+        .project-item.sub-item {
+            margin-bottom: 10mm;
+            /* 子項目間的間距 */
+            margin-left: 10mm;
+            /* 子項目內縮 */
+        }
+
+        .project-item.sub-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-item.sub-item h5 {
+            font-size: 1.1em;
+            /* 子項目標題大小 */
+            color: #16a085;
+            /* 子項目標題顏色 (稍暗的綠松石色) */
+            margin-bottom: 3px;
+        }
+    </style>
+    <!-- Font Awesome圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <!-- 可選: 頭像 -->
+            <!-- <img src="your-photo.jpg" alt="Your Photo" style="width: 80%; border-radius: 50%; margin: 0 auto 15mm auto; display: block;"> -->
+
+            <section class="contact-info">
+                <h2>聯絡資訊</h2>
+                <ul>
+                    <li><i class="fas fa-envelope"></i><a
+                            href="mailto:ericlee050828@gmail.com">ericlee050828@gmail.com</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i>臺灣</li>
+                    <li><i class="fab fa-linkedin"></i><a href="https://www.linkedin.com/in/ericlee050828"
+                            target="_blank">LinkedIn Profile</a></li>
+                    <li><i class="fab fa-github"></i><a href="https://github.com/eric050828" target="_blank">GitHub
+                            Profile</a></li>
+                </ul>
+            </section>
+
+            <section class="skills">
+                <h2>專業技能</h2>
+                <ul class="skills-list">
+                    <strong>AI & ML 技術</strong>
+                    <li>Generative AI / Agentic AI</li>
+                    <li>RAG / GraphRAG</li>
+                    <li>Knowledge Graph</li>
+                    <li>Machine Learning</li>
+                    <li>Deep Learning</li>
+                    <li>Reinforcement Learning</li>
+                    <li>PyTorch</li>
+
+                    <strong>程式語言 & 框架</strong>
+                    <li>Python</li>
+                    <li>Langchain</li>
+                    <li>GraphRAG</li>
+                    <li>AutoGen</li>
+                    <li>FastAPI</li>
+                    <li>Model Context Protocol</li>
+                    <li>Flask</li>
+
+                    <strong>開發工具 & 平台</strong>
+                    <li>Docker</li>
+                    <li>Git/GitHub</li>
+                    <li>Huggingface</li>
+                    <li>N8N workflow</li>
+
+                    <strong>數據技術</strong>
+                    <li>MySQL</li>
+                    <li>Neo4j</li>
+                    <li>SQLite</li>
+                    <li>ChromaDB</li>
+                </ul>
+            </section>
+
+            <section class="traits">
+                <h2>個人特質</h2>
+                <ul class="traits-list">
+                    <li>學習快速</li>
+                    <li>充滿熱誠</li>
+                    <li>工作效率高</li>
+                    <li>解決問題能力強</li>
+                    <li>團隊合作</li>
+                </ul>
+            </section>
+        </aside>
+
+        <main class="main-content">
+            <h1>李丞穎</h1>
+            <p class="job-title">AI 工程師(自稱) / 國立臺灣科技大學 資訊管理系</p>
+
+            <section class="summary">
+                <h2>個人簡介</h2>
+                <p>
+                    我是一名熱衷於人工智慧、機器學習和深度學習的資訊管理系學生。專注於AI
+                    Agent、LLM和知識圖譜領域，擅長將AI技術應用於解決實際問題。對於新技術有著濃厚的興趣與學習熱誠，擅長以高效率完成任務並不斷挑戰自我。具備多個AI相關專案經驗，包含知識圖譜、強化學習與多模態AI應用。期望能在AI領域持續深耕，尤其專注於大型語言模型(LLM)與智能Agent的研究與實踐。
+                </p>
+            </section>
+
+            <section class="projects">
+                <h2>專案經驗</h2>
+
+                <div class="project-item">
+                    <h3>VibeDeveloper - AI驅動全自動化專案生成系統</h3>
+                    <p class="item-meta">技術: AI Agent (PM, Dev, QA, Research), LLM, Python, 任務分解</p>
+                    <ul>
+                        <li>設計並開發了多Agent協作系統，目標僅需一句話需求即可自動生成完整專案(系統設計、程式碼、測試、文件)。</li>
+                        <li>實現了需求遞迴分解與澄清機制，使Research Agent能深入理解用戶意圖並進行資訊收集。</li>
+                        <li>規劃並模擬了不同角色的AI Agent (PM, Dev, QA, Assistant)協作流程，涵蓋規劃、實作、測試與文件撰寫。</li>
+                        <li>探索了AI Agent在軟體開發生命週期中的應用潛力，目標為實現端到端的智能自動化。</li>
+                    </ul>
+                </div>
+
+                <div class="project-item">
+                    <h3>GraphRAG API 服務</h3>
+                    <p class="item-meta">技術: FastAPI, Python, GraphRAG, Docker, API 設計</p>
+                    <ul>
+                        <li>基於 FastAPI 為 Microsoft GraphRAG 框架建構了高效能的 HTTP API 接口。</li>
+                        <li>實現了對 GraphRAG 核心功能 (索引、查詢、配置) 的 API 封裝，支援異步任務處理。</li>
+                        <li>設計並提供完整的 OpenAPI (Swagger UI) 文件，方便API集成與使用。</li>
+                        <li>容器化應用程式 (Docker)，簡化部署流程。</li>
+                    </ul>
+                </div>
+
+                <div class="project-item-group">
+                    <h4>自動化工作流 (N8N)</h4>
+                    <div class="project-item sub-item">
+                        <h5>Github 熱門 Repo 自動化分析推送</h5>
+                        <p class="item-meta">技術: N8N Workflow, Docker, API (GitHub, Groq, Discord), LLM</p>
+                        <ul>
+                            <li>設計並部署 N8N 自動化工作流，每日抓取 GitHub 熱門儲存庫 (兩週內星數最高)。</li>
+                            <li>整合 Groq API，利用 LLM 對抓取到的儲存庫進行自動摘要與趨勢分析。</li>
+                            <li>透過 Discord Bot API 將分析結果定時推播，實現技術趨勢的自動化監控與通知。</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-item sub-item">
+                        <h5>Docling 文件轉 Markdown Discord Bot</h5>
+                        <p class="item-meta">技術: N8N Workflow, API (Docling, Discord)</p>
+                        <ul>
+                            <li>利用 N8N 建構自動化工作流，串接 Docling 文件轉換 API 與 Discord Bot API。</li>
+                            <li>實現監聽指定 Discord 頻道的文件上傳事件。</li>
+                            <li>自動調用 Docling API 將上傳的文件轉換為 Markdown 格式，並將結果回傳至 Discord。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3>深度強化學習應用 - Pacman, Tetris, Snake...</h3>
+                    <p class="item-meta">技術: PyTorch, 強化學習 (DQN, Dueling DQN), Python, Gymnasium 環境</p>
+                    <ul>
+                        <li>應用深度強化學習 (Dueling DQN) 訓練 AI Agent 在 Pacman 環境中最大化得分。</li>
+                        <li>設計並實現了多通道網格狀態表示法，優化卷積神經網路(CNN)的特徵提取效率。</li>
+                        <li>開發了符合 OpenAI Gymnasium 標準的環境接口，方便模型訓練與評估。</li>
+                        <li>實踐了經驗回放、目標網路等強化學習關鍵技術，提升訓練穩定性與效果。</li>
+                    </ul>
+                </div>
+
+                <div class="project-item">
+                    <h3>Discord Character AI</h3>
+                    <p class="item-meta">技術: Python, Discord.py, Ollama, LLM (Llama 3.1), RAG, ChromaDB, Prompt
+                        Engineering</p>
+                    <ul>
+                        <li>開發了結合本地 LLM (Llama 3.1 via Ollama) 的 Discord AI 聊天機器人。</li>
+                        <li>實現了基於 RAG 和 ChromaDB 的向量資料庫，為每個用戶提供個性化的長期記憶檢索能力。</li>
+                        <li>整合短期對話上下文記憶，並設計個性化角色思想更新機制。</li>
+                        <li>應用 Prompt Engineering 技術塑造 AI 角色的特定行為與回應風格。</li>
+                    </ul>
+                </div>
+
+                <div class="project-item">
+                    <h3>口腔疾病檢測系統</h3>
+                    <p class="item-meta">技術: FastAPI, PyTorch, 深度學習, 電腦視覺, Android</p>
+                    <ul>
+                        <li>開發了基於深度學習的口腔疾病檢測系統，結合FastAPI後端服務與Android前端應用。</li>
+                        <li>使用EfficientNet模型訓練口腔疾病辨識AI，實現對口腔癌、牙結石等多種疾病的準確檢測。</li>
+                        <li>設計與實現RESTful API架構，處理圖像上傳、模型推論與結果返回流程。</li>
+                        <li>打造醫療領域的多模態AI應用示範，將深度學習技術應用於實際醫療需求。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="education">
+                <h2>學歷</h2>
+                <div class="education-item">
+                    <h3>學士學位, 資訊管理系</h3>
+                    <p class="item-meta">國立臺灣科技大學, 臺北 | 2023年 - 至今</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"
+        integrity="sha512-yFjZbTYRCJodnuyGsq+z9HmKnFq9Jk9pVrSnpQ6HHY/l+T7M/x4r+gHx/+zQX1uV90K4l+4H7N/2sZJ60m6YQg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+</html>
